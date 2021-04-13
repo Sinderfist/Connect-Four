@@ -1,0 +1,51 @@
+/* the height and width of the screen so that it does not scroll */
+body, html{
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;      /* Opera*/
+    background-size: cover;         /* Generic*/
+};
+
+h1{
+    text-align:center;
+}
+
+h3{
+    text-align: center;
+}
+/* this is the board itself */
+.game{
+position: absolute;
+border: 1px solid black;
+top: 10rem;
+left: 50%;
+transform: translate(-50%);
+width:650px;
+height:600px;
+background-color: rgb(79, 157, 221);
+padding: 1.5rem;
+}
+
+/* These are the individual slots themselves */
+.slot{
+    width:90px;
+    height:90px;
+    background-color: white;
+    border:1px solid black;
+    border-radius: 50%;
+}
+
+.slot:hover{
+    opacity:.8
+}
+
+/* reset button position */
+.reset{
+    position:fixed;
+    top:95vh;
+    left:50%;
+    transform:translate(-50%);
+}
