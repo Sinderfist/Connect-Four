@@ -9,33 +9,32 @@ const playerTurn = document.querySelector(".playerTurn")
 const reset = document.querySelector(".reset")
 
 
+// Player Name Logic 
+var player1;
+var player2;
+
+var setNames = () => {
+    player1 = prompt("enter your name")
+    player2 = prompt("enter your name")
+    console.log(player1)
+    console.log(player2)
+}
+setNames()
+
+player1Color = 'red';
+player2Color = 'black';
+
+
 //This for loop will be our listener for each click on the game board, it produces the coordiantes to be used for the win game logic
 
 for (let i = 0; i < tableId.length; i++) {
     tableId[i].addEventListener('click', (e) => {
         console.log('${e.target.parentElement.rowIndex}', '${e.target.cellIndex}')
     })
-}
+};
 
-// Player Name Logic 
-
-// while player 1 has no name a prompt comes on screen asking for your name and tells you your color
-while (!player1) {
-    var player1 = prompt('Red player: Enter your name')
-}
-
-player1Color = 'red';
-
-// while player 2 has no name a prompt comes on screen asking for your name and tells you your color
-while (!player2) {
-    var player2 = prompt('Black player: Enter your name')
-}
-
-player2Color = 'black';
-
-//current player will always return to 1 after the second player's turn
 var currentPlayer = 1;
-playerTurn.textContent = '${player1}s Turn';
+playerTurn.textContent = player1
 
 
 

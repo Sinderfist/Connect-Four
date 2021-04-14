@@ -9,10 +9,14 @@ body, html{
     background-size: cover;         /* Generic*/
 };
 
-h1{
-    text-align:center;
+.titleContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center
 }
-
+h1{
+    text-align: center;
+}
 h3{
     text-align: center;
 }
