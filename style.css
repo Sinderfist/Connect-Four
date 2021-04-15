@@ -42,9 +42,9 @@ padding: 1.5rem;
     border-radius: 50%;
 }
 
-.slot:hover{
+/* .slot:hover{
     opacity:.8
-}
+} */
 
 /* reset button position */
 .reset{
