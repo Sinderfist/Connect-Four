@@ -58,7 +58,7 @@ var colorChange = (e) => {
             //when that cell gets pushed into a new array it is then colored with the current player's color
             if (currentPlayer === 1) {
                 row[0].style.backgroundColor = player1Color;
-                if(horizontalCheck() || verticalCheck()){
+                if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
                     return (alert("winner"))
                 }
                 //when the row is colored with player 1's color it changes the text content of the current player to 2  
@@ -93,7 +93,7 @@ var winCondition = (one, two, three, four) => {
 var horizontalCheck = () => {
     for (let row = 0; row < tableRow.length; row++) {
         for (let col = 0; col < 4; col++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col+1].style.backgroundColor, tableRow[row].children[col+2].style.backgroundColor, tableRow[row].children[col+3].style.backgroundColor)) {
+            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col + 1].style.backgroundColor, tableRow[row].children[col + 2].style.backgroundColor, tableRow[row].children[col + 3].style.backgroundColor)) {
                 return true
             }
         }
@@ -103,9 +103,41 @@ var horizontalCheck = () => {
 var verticalCheck = () => {
     for (let col = 0; col < 7; col++) {
         for (let row = 0; row < 3; row++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row+1].children[col].style.backgroundColor, tableRow[row+2].children[col].style.backgroundColor, tableRow[row+3].children[col].style.backgroundColor)) {
+            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col].style.backgroundColor, tableRow[row + 2].children[col].style.backgroundColor, tableRow[row + 3].children[col].style.backgroundColor)) {
                 return true
             }
         }
+    }
+}
+
+var diagonalCheck1 = () => {
+    for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < 3; row++) {
+            if (winCondition(tableRow[row].children[col].style.backgroundColor,tableRow[row+1].children[col+1].style.backgroundColor,tableRow[row+2].children[col+2].style.backgroundColor,tableRow[row+3].children[col+3].style.backgroundColor)){
+                return true
+            }
+        }
+    }
+}
+
+var diagonalCheck2 = () => {
+    for(let col = 0; col < 4; col++){
+        for(let row = 5; row > 2; row--){
+            if(winCondition(tableRow[row].children[col].style.backgroundColor,tableRow[row-1].children[col+1].style.backgroundColor,tableRow[row-2].children[col+2].style.backgroundColor,tableRow[row-3].children[col+3].style.backgroundColor)){
+                return true
+            }
+        }
+    }
+}
+
+var fullBoardCheck = () => {
+    let full = [];
+    for(let i = 0; i < tableId.length; i++){
+        if(tableId[i].style.backgroundColor !== 'white'){
+            full.push(tableId[i]);
+        }
+    }
+    if(full.length === tableId.length){
+        return true
     }
 }
