@@ -2,11 +2,23 @@
 var tableRow = document.getElementsByTagName("tr")
 var tableId = document.getElementsByTagName("td")
 // tableSlot will be the used to modify the colors of each individual slot on the board
-var tableSlot = document.querySelector(".slot")
+var tableSlot = document.querySelectorAll(".slot")
 // this constant will hold display the player's turn every time it rotates between turns
 const playerTurn = document.querySelector(".playerTurn")
 // 
 const reset = document.querySelector(".reset")
+
+var currentPlayer = 1;
+
+playerTurn.textContent = player1
+
+//This for loop will be our listener for each click on the game board, it produces the coordiantes to be used for the win game logic
+
+for (let i = 0; i < tableId.length; i++) {
+    tableId[i].addEventListener('click', (e) => {
+        console.log(`${e.target.parentElement.rowIndex}`, `${e.target.cellIndex}`)
+    })
+};
 
 
 // Player Name Logic 
@@ -26,16 +38,6 @@ setNames()
 
 
 
-//This for loop will be our listener for each click on the game board, it produces the coordiantes to be used for the win game logic
-
-for (let i = 0; i < tableId.length; i++) {
-    tableId[i].addEventListener('click', (e) => {
-        console.log(`${e.target.parentElement.rowIndex}`, `${e.target.cellIndex}`)
-    })
-};
-
-var currentPlayer = 1;
-playerTurn.textContent = player1
 
 
 
@@ -60,7 +62,7 @@ var colorChange = (e) => {
                 row[0].style.backgroundColor = player1Color;
                 if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
                     playerTurn.textContent = `${player1} wins!`;
-                    return (alert("winner"))
+                    return (alert(`${player1} is the winner`))
                 }
                 else if (fullBoardCheck()) {
                     return (alert('DRAW'))
@@ -78,7 +80,7 @@ var colorChange = (e) => {
                 playerTurn.textContent = `${player2}'s turn!`
                 if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
                     playerTurn.textContent = `${player2} wins!`;
-                    return (alert("winner"))
+                    return (alert(`${player2} is the winner`))
                 }
                 else if (fullBoardCheck()) {
                     return (alert('DRAW'))
@@ -162,3 +164,12 @@ var fullBoardCheck = () => {
         return true
     }
 }
+
+reset.addEventListener('click', () =>{
+    tableSlot.forEach((slot) =>{
+        slot.style.backgroundColor = 'white';
+    });
+
+    playerTurn.textContent = `${player1}'s Turn`
+    return currentPlayer
+})
