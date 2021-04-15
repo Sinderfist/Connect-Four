@@ -59,15 +59,36 @@ var colorChange = (e) => {
             if (currentPlayer === 1) {
                 row[0].style.backgroundColor = player1Color;
                 if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
+                    playerTurn.textContent = `${player1} wins!`;
                     return (alert("winner"))
+                }
+                else if (fullBoardCheck()) {
+                    return (alert('DRAW'))
+                }
+                else {
+                    playerTurn.textContent = `${player2} wins!`
                 }
                 //when the row is colored with player 1's color it changes the text content of the current player to 2  
                 playerTurn.textContent = `${player2}'s turn!`
                 //the current player is then changed the the second player
                 return currentPlayer = 2;
+
             } else {
                 row[0].style.backgroundColor = player2Color;
+                playerTurn.textContent = `${player2}'s turn!`
+                if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
+                    playerTurn.textContent = `${player2} wins!`;
+                    return (alert("winner"))
+                }
+                else if (fullBoardCheck()) {
+                    return (alert('DRAW'))
+                }
+                else {
+                    playerTurn.textContent = `${player1} wins!`
+                }
+                //when the row is colored with player 2's color it changes the text content of the current player to 2  
                 playerTurn.textContent = `${player1}'s turn!`
+                //the current player is then changed the the second player
                 return currentPlayer = 1
             }
         }
@@ -113,7 +134,7 @@ var verticalCheck = () => {
 var diagonalCheck1 = () => {
     for (let col = 0; col < 4; col++) {
         for (let row = 0; row < 3; row++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor,tableRow[row+1].children[col+1].style.backgroundColor,tableRow[row+2].children[col+2].style.backgroundColor,tableRow[row+3].children[col+3].style.backgroundColor)){
+            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col + 1].style.backgroundColor, tableRow[row + 2].children[col + 2].style.backgroundColor, tableRow[row + 3].children[col + 3].style.backgroundColor)) {
                 return true
             }
         }
@@ -121,9 +142,9 @@ var diagonalCheck1 = () => {
 }
 
 var diagonalCheck2 = () => {
-    for(let col = 0; col < 4; col++){
-        for(let row = 5; row > 2; row--){
-            if(winCondition(tableRow[row].children[col].style.backgroundColor,tableRow[row-1].children[col+1].style.backgroundColor,tableRow[row-2].children[col+2].style.backgroundColor,tableRow[row-3].children[col+3].style.backgroundColor)){
+    for (let col = 0; col < 4; col++) {
+        for (let row = 5; row > 2; row--) {
+            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor, tableRow[row - 2].children[col + 2].style.backgroundColor, tableRow[row - 3].children[col + 3].style.backgroundColor)) {
                 return true
             }
         }
@@ -132,12 +153,12 @@ var diagonalCheck2 = () => {
 
 var fullBoardCheck = () => {
     let full = [];
-    for(let i = 0; i < tableId.length; i++){
-        if(tableId[i].style.backgroundColor !== 'white'){
+    for (let i = 0; i < tableId.length; i++) {
+        if (tableId[i].style.backgroundColor !== 'white') {
             full.push(tableId[i]);
         }
     }
-    if(full.length === tableId.length){
+    if (full.length === tableId.length) {
         return true
     }
 }
