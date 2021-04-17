@@ -14,13 +14,23 @@ body, html{
     display: flex;
     justify-content: center
 }
+
+.titleContainer:hover{
+
+}
+
+
 h1{
     text-align: center;
 }
+
+
 h3{
     text-align: center;
 }
 /* this is the board itself */
+
+
 .game{
 position: absolute;
 border: 1px solid black;
@@ -31,6 +41,7 @@ width:650px;
 height:600px;
 background-color: rgb(79, 157, 221);
 padding: 1.5rem;
+box-shadow: 5px 5px 5px 5px blue;
 }
 
 /* These are the individual slots themselves */
@@ -42,11 +53,11 @@ padding: 1.5rem;
     border-radius: 50%;
 }
 
-/* .slot:hover{
+.slot:hover{
     opacity:.8
-} */
+}
 
-/* reset button position */
+/*reset button position*/
 .reset{
     position:fixed;
     top:95vh;

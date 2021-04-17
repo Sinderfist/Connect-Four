@@ -10,8 +10,6 @@ const reset = document.querySelector(".reset")
 
 var currentPlayer = 1;
 
-playerTurn.textContent = player1
-
 //This for loop will be our listener for each click on the game board, it produces the coordiantes to be used for the win game logic
 
 for (let i = 0; i < tableId.length; i++) {
@@ -35,15 +33,6 @@ var setNames = () => {
 }
 setNames()
 
-
-
-
-
-
-
-
-
-
 // Color Change Function
 
 var colorChange = (e) => {
@@ -63,6 +52,7 @@ var colorChange = (e) => {
                 if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
                     playerTurn.textContent = `${player1} wins!`;
                     return (alert(`${player1} is the winner`))
+
                 }
                 else if (fullBoardCheck()) {
                     return (alert('DRAW'))
@@ -74,7 +64,7 @@ var colorChange = (e) => {
                 playerTurn.textContent = `${player2}'s turn!`
                 //the current player is then changed the the second player
                 return currentPlayer = 2;
-
+                //This is literally a copy and paste of player 1's win condition checks but for player 2
             } else {
                 row[0].style.backgroundColor = player2Color;
                 playerTurn.textContent = `${player2}'s turn!`
@@ -88,9 +78,7 @@ var colorChange = (e) => {
                 else {
                     playerTurn.textContent = `${player1} wins!`
                 }
-                //when the row is colored with player 2's color it changes the text content of the current player to 2  
                 playerTurn.textContent = `${player1}'s turn!`
-                //the current player is then changed the the second player
                 return currentPlayer = 1
             }
         }
@@ -101,6 +89,7 @@ Array.prototype.forEach.call(tableId, (cell) => {
     cell.addEventListener('click', colorChange)
     cell.style.backgroundColor = 'white';
 });
+
 
 //WIN CONDITION FUNCTION 
 
@@ -114,62 +103,68 @@ var winCondition = (one, two, three, four) => {
 //Horizontal win condition check
 
 var horizontalCheck = () => {
-    for (let row = 0; row < tableRow.length; row++) {
+        for (let row = 0; row < tableRow.length; row++) {
+            for (let col = 0; col < 4; col++) {
+                if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col + 1].style.backgroundColor, tableRow[row].children[col + 2].style.backgroundColor, tableRow[row].children[col + 3].style.backgroundColor)) {
+                    return true
+                }
+            }
+        }
+    }
+
+
+
+    var verticalCheck = () => {
+        for (let col = 0; col < 7; col++) {
+            for (let row = 0; row < 3; row++) {
+                if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col].style.backgroundColor, tableRow[row + 2].children[col].style.backgroundColor, tableRow[row + 3].children[col].style.backgroundColor)) {
+                    return true
+                }
+            }
+        }
+    }
+
+    var diagonalCheck1 = () => {
         for (let col = 0; col < 4; col++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row].children[col + 1].style.backgroundColor, tableRow[row].children[col + 2].style.backgroundColor, tableRow[row].children[col + 3].style.backgroundColor)) {
-                return true
+            for (let row = 0; row < 3; row++) {
+                if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col + 1].style.backgroundColor, tableRow[row + 2].children[col + 2].style.backgroundColor, tableRow[row + 3].children[col + 3].style.backgroundColor)) {
+                    return true
+                }
             }
         }
     }
-}
 
-var verticalCheck = () => {
-    for (let col = 0; col < 7; col++) {
-        for (let row = 0; row < 3; row++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col].style.backgroundColor, tableRow[row + 2].children[col].style.backgroundColor, tableRow[row + 3].children[col].style.backgroundColor)) {
-                return true
+    var diagonalCheck2 = () => {
+        for (let col = 0; col < 4; col++) {
+            for (let row = 5; row > 2; row--) {
+                if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor, tableRow[row - 2].children[col + 2].style.backgroundColor, tableRow[row - 3].children[col + 3].style.backgroundColor)) {
+                    return true
+                }
             }
         }
     }
-}
 
-var diagonalCheck1 = () => {
-    for (let col = 0; col < 4; col++) {
-        for (let row = 0; row < 3; row++) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row + 1].children[col + 1].style.backgroundColor, tableRow[row + 2].children[col + 2].style.backgroundColor, tableRow[row + 3].children[col + 3].style.backgroundColor)) {
-                return true
+    var fullBoardCheck = () => {
+        let full = [];
+        for (let i = 0; i < tableId.length; i++) {
+            if (tableId[i].style.backgroundColor !== 'white') {
+                full.push(tableId[i]);
             }
         }
-    }
-}
-
-var diagonalCheck2 = () => {
-    for (let col = 0; col < 4; col++) {
-        for (let row = 5; row > 2; row--) {
-            if (winCondition(tableRow[row].children[col].style.backgroundColor, tableRow[row - 1].children[col + 1].style.backgroundColor, tableRow[row - 2].children[col + 2].style.backgroundColor, tableRow[row - 3].children[col + 3].style.backgroundColor)) {
-                return true
-            }
+        if (full.length === tableId.length) {
+            return true
         }
     }
-}
 
-var fullBoardCheck = () => {
-    let full = [];
-    for (let i = 0; i < tableId.length; i++) {
-        if (tableId[i].style.backgroundColor !== 'white') {
-            full.push(tableId[i]);
-        }
-    }
-    if (full.length === tableId.length) {
-        return true
-    }
-}
 
-reset.addEventListener('click', () =>{
-    tableSlot.forEach((slot) =>{
-        slot.style.backgroundColor = 'white';
-    });
 
-    playerTurn.textContent = `${player1}'s Turn`
-    return currentPlayer
-})
+
+    //This is for the reset button. When clicked it resets all colors on the board to white without wiping the players names and resets it back to player 1
+    reset.addEventListener('click', () => {
+        tableSlot.forEach((slot) => {
+            slot.style.backgroundColor = 'white';
+        });
+
+        playerTurn.textContent = `${player1}'s Turn`
+        return currentPlayer
+    })
