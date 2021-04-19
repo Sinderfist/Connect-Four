@@ -14,17 +14,21 @@ var currentPlayer = 1;
 
 for (let i = 0; i < tableId.length; i++) {
     tableId[i].addEventListener('click', (e) => {
+        //the console log is a template literal for the coordinates for each row and column cell.
         console.log(`${e.target.parentElement.rowIndex}`, `${e.target.cellIndex}`)
     })
 };
 
 
 // Player Name Logic 
+
+//variables are stated for player 1 and player 2 as well as their colors. 
 var player1;
 var player2;
 var player1Color = 'red';
 var player2Color = 'black';
 
+//this function sets the names in a prompt
 var setNames = () => {
     player1 = prompt("enter your name")
     player2 = prompt("enter your name")
@@ -49,8 +53,11 @@ var colorChange = (e) => {
             //when that cell gets pushed into a new array it is then colored with the current player's color
             if (currentPlayer === 1) {
                 row[0].style.backgroundColor = player1Color;
+                //This is the if statement for the winCondition to check for player1's color
                 if (horizontalCheck() || verticalCheck() || diagonalCheck1() || diagonalCheck2()) {
+                    //if the player meets the conditions of any of the checks then the player's text content will turn into the player's name
                     playerTurn.textContent = `${player1} wins!`;
+                    //the template literal will take the text content for player 1 and insert the text that was entered in the prompt as well as "is the winner"
                     return (alert(`${player1} is the winner`))
 
                 }
@@ -85,6 +92,8 @@ var colorChange = (e) => {
     }
 }
 
+
+//array prototype with the forEach method provides the addEventListener to all Arrays within my document. 
 Array.prototype.forEach.call(tableId, (cell) => {
     cell.addEventListener('click', colorChange)
     cell.style.backgroundColor = 'white';
@@ -100,7 +109,7 @@ var winCondition = (one, two, three, four) => {
 
 }
 
-//Horizontal win condition check
+//This check is to check if any of the rows have 4 colors IN ORDER that match on the same row
 
 var horizontalCheck = () => {
         for (let row = 0; row < tableRow.length; row++) {
@@ -112,8 +121,7 @@ var horizontalCheck = () => {
         }
     }
 
-
-
+    //This check is to check if any of the columns have 4 IN ORDER colors that match in a vertical line 
     var verticalCheck = () => {
         for (let col = 0; col < 7; col++) {
             for (let row = 0; row < 3; row++) {
@@ -124,6 +132,7 @@ var horizontalCheck = () => {
         }
     }
 
+    //this diagonal check is to see if the board has any matches that are from the top down diagonally
     var diagonalCheck1 = () => {
         for (let col = 0; col < 4; col++) {
             for (let row = 0; row < 3; row++) {
@@ -134,6 +143,8 @@ var horizontalCheck = () => {
         }
     }
 
+
+    //this diagonal check is to see if the board has any matches that are from the bottom up diagonally 
     var diagonalCheck2 = () => {
         for (let col = 0; col < 4; col++) {
             for (let row = 5; row > 2; row--) {
@@ -144,6 +155,7 @@ var horizontalCheck = () => {
         }
     }
 
+// If there are no more available white spaces it takes the color of the last player and places it into a new array then returns DRAW in our color change function
     var fullBoardCheck = () => {
         let full = [];
         for (let i = 0; i < tableId.length; i++) {
@@ -164,7 +176,7 @@ var horizontalCheck = () => {
         tableSlot.forEach((slot) => {
             slot.style.backgroundColor = 'white';
         });
-
+        
         playerTurn.textContent = `${player1}'s Turn`
         return currentPlayer
     })
